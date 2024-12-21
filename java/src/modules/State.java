@@ -8,7 +8,7 @@ public enum State {
     THROWN("Jeté", ""),
     SOLD("Vendu", ""),
     GIVEN("Donné", ""),
-    ;
+    BORROWED("Emprunté", "");
 
 
     private final String name;
