@@ -1,13 +1,14 @@
 package modules;
 
 public enum State {
-    PERFECT("Parfait",""),
-    FAULTY("Defectueux", ""),
-    BROKEN("Cassé", ""),
+    PERFECT("Parfait","Objet en bonne état voir neuf."),
+    FAULTY("Défectueux", "Objet abimé, (ex: rayure)."),
+    BROKEN("Cassé", "Objet qui ne fonctionne plus."),
     UNKNOWN("Inconnu", ""),
     THROWN("Jeté", ""),
     SOLD("Vendu", ""),
-    GIVEN("Donné", "");
+    GIVEN("Donné", ""),
+    ;
 
 
     private final String name;
