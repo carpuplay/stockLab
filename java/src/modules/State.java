@@ -4,8 +4,8 @@ public enum State {
     PERFECT("Parfait","Objet en bonne état voir neuf."),
     FAULTY("Défectueux", "Objet abimé, (ex: rayure)."),
     BROKEN("Cassé", "Objet qui ne fonctionne plus."),
-    UNKNOWN("Inconnu", ""),
-    THROWN("Jeté", ""),
+    UNKNOWN("Inconnu", "Objet non décrit."),
+    THROWN("Jeté", "L'objet à été jetté"),
     SOLD("Vendu", ""),
     GIVEN("Donné", ""),
     BORROWED("Emprunté", "");

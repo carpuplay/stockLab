@@ -2,14 +2,12 @@ package modules;
 
 import utils.*;
 
-import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.Random;
 
 
-public class Object {
+public class Item {
     public String name;
     public String[] keyWord;
     
@@ -23,7 +21,7 @@ public class Object {
     private static final IdManager idManager = new IdManager();
     
 
-    public Object(String name, String[] keyWord , String id, State state, int value, LocalDate purchaseDate) {
+    public Item(String name, String[] keyWord , String id, State state, int value, LocalDate purchaseDate) {
         this.name = name;
         this.keyWord = new String[MAX_KEYWORD];
         this.setKeyWord(keyWord);
@@ -119,7 +117,7 @@ public class Object {
     }
 
     public static void main(String[] args){
-        Object obj = new Object("Sample Object", new String[]{"key1", "key2"}, "", State.PERFECT, 100, LocalDate.now());
+        Item obj = new Item("Sample Object", new String[]{"key1", "key2"}, "", State.PERFECT, 100, LocalDate.now());
         System.out.println("Object Name: " + obj.getName());
         System.out.println("Object Id: " + obj.getId());
         System.out.println("Object keys:" + Arrays.toString(obj.getKeyWord()));
@@ -132,6 +130,8 @@ public class Object {
         obj.removeKeyword("key1");
         System.out.println("Object keys:" + Arrays.toString(obj.getKeyWord()));
 
+        String filePath = "/gitWorkspaces/stockLab/data/";
+        CSVHandler.saveToCSV(obj, filePath);
 
     }
 }
