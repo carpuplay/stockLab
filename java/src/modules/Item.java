@@ -2,6 +2,7 @@ package modules;
 
 import utils.*;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Objects;
@@ -13,7 +14,7 @@ public class Item {
     
     public String id;
     public State state;
-    public int value;
+    public float value;
 
     public LocalDate purchaseDate;
 
@@ -21,7 +22,7 @@ public class Item {
     private static final IdManager idManager = new IdManager();
     
 
-    public Item(String name, String[] keyWord , String id, State state, int value, LocalDate purchaseDate) {
+    public Item(String name, String[] keyWord , String id, State state, float value, LocalDate purchaseDate) {
         this.name = name;
         this.keyWord = new String[MAX_KEYWORD];
         this.setKeyWord(keyWord);
@@ -42,7 +43,7 @@ public class Item {
         return state;
     }
 
-    public int getValue() {
+    public float getValue() {
         return value;
     }
 
@@ -130,8 +131,8 @@ public class Item {
         obj.removeKeyword("key1");
         System.out.println("Object keys:" + Arrays.toString(obj.getKeyWord()));
 
-        String filePath = "/gitWorkspaces/stockLab/data/";
-        CSVHandler.saveToCSV(obj, filePath);
-
+        String userHomeDir = System.getProperty("user.home");
+        File file = new File("/Users/acarp/gitWorkspace/stockLab/myfile.csv");
+        CSVHandler.saveToCSV(obj, file);
     }
 }
