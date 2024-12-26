@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class Item {
     public String name;
-    public String[] keyWord;
+    public String[] keyWords;
     
     public String id;
     public State state;
@@ -19,14 +19,16 @@ public class Item {
     public LocalDate purchaseDate;
 
     private static final int MAX_KEYWORD = 10;
+    private static final int TYPE = 2;
     private static final IdManager idManager = new IdManager();
+    private static final ArrayManager arrayManager = new ArrayManager();
     
 
     public Item(String name, String[] keyWord , String id, State state, float value, LocalDate purchaseDate) {
         this.name = name;
-        this.keyWord = new String[MAX_KEYWORD];
+        this.keyWords = new String[MAX_KEYWORD];
         this.setKeyWord(keyWord);
-        this.id = this.createId(id);
+        this.id = idManager.createId(id, TYPE);
         this.state = state;
         this.value = value;
         this.purchaseDate = purchaseDate;
@@ -37,7 +39,7 @@ public class Item {
     }
 
     public String[] getKeyWord() {
-        return keyWord;
+        return keyWords;
     }
     public State getState() {
         return state;
@@ -55,6 +57,8 @@ public class Item {
         return id;
     }
 
+
+
     public void setState(State state) {
         this.state = state;
     }
@@ -70,23 +74,16 @@ public class Item {
         this.value = value;
     }
 
-    private String createId(String id) {
-        if (Objects.equals(id, "")){
-            return idManager.generateId(2);
-        }
-        return id;
-    }
-
     //LOGIQUE DES KEYWORDS
-    public void setKeyWord(String[] keyWord){
-        if (keyWord == null){
+    public void setKeyWord(String[] keyWords){
+        if (keyWords == null){
             throw new IllegalArgumentException("Keywords cannot be null");
         }
-        if (keyWord.length > MAX_KEYWORD) {
+        if (keyWords.length > MAX_KEYWORD) {
             throw new IllegalArgumentException("Too many keywords provided");
         }
-        for ( int i = 0; i < keyWord.length; i++) {
-            this.keyWord[i] = keyWord[i];
+        for ( int i = 0; i < keyWords.length; i++) {
+            this.keyWords[i] = keyWords[i];
         }
     }
 
@@ -95,26 +92,34 @@ public class Item {
             throw new IllegalArgumentException("Keyword cannot be null or empty.");
         }
         for (int i = 0; i < MAX_KEYWORD; i++) {
-            if (this.keyWord[i] == null) {
-                this.keyWord[i] = keyWord;
+            if (this.keyWords[i] == null) {
+                this.keyWords[i] = keyWord;
                 return;
             }
         }
         throw new IllegalStateException("No more keywords can be added.");
     }
 
-    public void removeKeyword(String keyword) {
-        for (int i = 0; i < MAX_KEYWORD; i++) {
-            if (keyWord[i] != null && keyWord[i].equals(keyword)) {
-                keyWord[i] = null;
-                return;
-            }
+    public void removeKeyword(int index) {
+        if (index < 0 || index >= MAX_KEYWORD) {
+            throw new IllegalArgumentException("Invalid keyword index");
         }
-        throw new IllegalArgumentException("Keyword not found to be removed.");
+        keyWords[index] = null;
+    }
+
+    public void removeKeywordByName(String keyWord) {
+        int keyWordIndex = arrayManager.getIndexByString(keyWords, keyWord);
+        if (keyWordIndex >= 0) {
+            removeKeyword(keyWordIndex);
+        }
     }
 
     public void setPurchaseDate(LocalDate purchaseDate){
         this.purchaseDate = purchaseDate;
+    }
+
+    public boolean isKeywordGiven(String keyWord) {
+        return arrayManager.isStringInArray(this.keyWords, keyWord);
     }
 
     public static void main(String[] args){
@@ -128,7 +133,7 @@ public class Item {
         obj.setState(State.FAULTY);
         System.out.println("Object State after change: " + obj.getState().getName());
         obj.addKeyword("newKeyword");
-        obj.removeKeyword("key1");
+        obj.removeKeywordByName("key1");
         System.out.println("Object keys:" + Arrays.toString(obj.getKeyWord()));
 
         String userHomeDir = System.getProperty("user.home");

@@ -1,5 +1,6 @@
 package utils;
 
+import java.util.Objects;
 import java.util.Random;
 
 public class IdManager {
@@ -33,11 +34,18 @@ public class IdManager {
         };
     }
 
-    public String generateId(int type) {
+    private String generateId(int type) {
         int length = getLengthByType(type);
         String characters = getCharactersAvailable(type);
 
         return generateRandomString(characters, length);
+    }
+
+    public String createId(String id, int type) {
+        if (id.isEmpty()){
+            return this.generateId(type);
+        }
+        return id;
     }
 
     public static void main(String[] args){
