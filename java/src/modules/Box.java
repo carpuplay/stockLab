@@ -1,32 +1,61 @@
 package modules;
 
+import utils.ArrayManager;
 import utils.IdManager;
-
-import java.util.Objects;
 
 
 public class Box {
-    private String id;
-    private String itemId;
+    private String boxId;
+    public Item[] items;
+    private static final int MAX_ITEMS = 30;
+
     private static final IdManager idManager = new IdManager();
+    private static final ArrayManager arrayManager = new ArrayManager();
     private static final int TYPE = 1;
 
-    public Box(String id, String itemId) {
-        this.id = idManager.createId(id, TYPE);
-        this.itemId = itemId;
+    public Box(String boxId) {
+        this.boxId = idManager.createId(boxId, TYPE);
+        this.items = new Item[MAX_ITEMS];
     }
 
-    public String getId() {
-        return id;
+    public String getBoxId() {
+        return boxId;
     }
 
-    public String getItemId() {
-        return itemId;
-    }
-    public void addItemId(String item) {
-        // add logic to add small item in smallItems array
+    public Item[] getItems() {
+        return items;
     }
 
+    public Item getItemById(String id) {
+        for (int i = 0; i < MAX_ITEMS; i++) {
+            String itemId = items[i].getId();
+            if (itemId.equals(id)) {
+                return items[i];
+            }
+        }
+        return null;
+    }
 
+    public void addItem(Item item) {
+        for (int i = 0; i < MAX_ITEMS; i++) {
+            if (items[i] == null) {
+                items[i] = item;
+                break;
+            }
+        }
+        throw new IllegalArgumentException("Rack is full");
+    }
+
+    public void removeItem(String id) {
+        for (int i = 0; i < MAX_ITEMS; i++) {
+            if (items[i] != null) {
+                String itemId = items[i].getId();
+                if (itemId.equals(id)) {
+                    items[i] = null;
+                    break;
+                }
+            }
+        }
+    }
 
 }

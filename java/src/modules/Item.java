@@ -57,8 +57,6 @@ public class Item {
         return id;
     }
 
-
-
     public void setState(State state) {
         this.state = state;
     }
