@@ -24,7 +24,7 @@ public class Item {
     private static final ArrayManager arrayManager = new ArrayManager();
     
 
-    public Item(String name, String[] keyWord , String id, State state, float value, LocalDate purchaseDate) {
+    public Item(String name, String[] keyWord ,String id, State state, float value, LocalDate purchaseDate) {
         this.name = name;
         this.keyWords = new String[MAX_KEYWORD];
         this.setKeyWord(keyWord);

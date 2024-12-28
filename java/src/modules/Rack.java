@@ -21,7 +21,7 @@ public class Rack {
     public Rack(String rackId) {
         this.items = new Item[MAX_ITEMS];
         this.boxes = new Box[MAX_BOXES];
-        this.rackId = idManager.createId(rackId, TYPE);
+        this.rackId = idManager.createId( rackId, TYPE);
     }
 
     public String getRackId() {
@@ -49,6 +49,7 @@ public class Rack {
                 }
             }
         }
+        System.out.println("Item not found in rack");
         for (int i = 0; i < MAX_BOXES; i++) {
             if (boxes[i] != null) {
                 Item item = boxes[i].getItemById(id);
@@ -57,6 +58,7 @@ public class Rack {
                 }
             }
         }
+        System.out.println("Item not found in boxes");
         return null;
     }
 
@@ -64,32 +66,46 @@ public class Rack {
         for (int i = 0; i < MAX_ITEMS; i++) {
             if (items[i] == null) {
                 items[i] = item;
-                break;
+                return;
             }
         }
         throw new IllegalArgumentException("Rack is full");
     }
 
-    public void removeIdFromRack(String id) {
+    public void removeItemFromRack(Item item) {
         for (int i = 0; i < MAX_ITEMS; i++) {
-            if (items[i] != null) {
-                if (items[i].getId().equals(id)) {
+            if (items[i] == item) {
                     items[i] = null;
-                }
+                    return;
             }
         }
+        throw new IllegalArgumentException("Item not found in rack");
     }
 
     public void addBox(Box box) {
         for (int i = 0; i < MAX_BOXES; i++) {
-            if (boxes[i] != null) {
-                throw new IllegalArgumentException("Rack is full");
-            } else {
+            if (boxes[i] == null) {
                 boxes[i] = box;
+                return;
             }
         }
+        throw new IllegalArgumentException("Rack is full");
     }
 
+    public static void main(String[] args) {
+        Rack test = new Rack("");
+        Item item = new Item("test", new String[]{"test"}, "",State.PERFECT, 0, null);
+        Item item2 = new Item("test2", new String[]{"test2"}, "", State.PERFECT, 0, null);
+        Item item3 = new Item("test3", new String[]{"test3"}, "",State.PERFECT, 0, null);
+        System.out.println("Rack ID: " + test.getRackId());
+        test.addItem(item);
+        test.addItem(item2);
+        test.addItem(item3);
+
+        System.out.println("Item ID (by id search): " + test.getItemById(item.getId()).getId());
+        test.removeItemFromRack(item2);
+        System.out.println("Item ID (by id search): " + test.getItemById(item2.getId()).getId());
 
 
+    }
 }
