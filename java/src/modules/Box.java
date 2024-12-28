@@ -3,6 +3,9 @@ package modules;
 import utils.ArrayManager;
 import utils.IdManager;
 
+import java.time.LocalDate;
+import java.util.Arrays;
+
 
 public class Box {
     private String boxId;
@@ -40,10 +43,10 @@ public class Box {
         for (int i = 0; i < MAX_ITEMS; i++) {
             if (items[i] == null) {
                 items[i] = item;
-                break;
+                return;
             }
         }
-        throw new IllegalArgumentException("Rack is full");
+        throw new IllegalArgumentException("Box is full");
     }
 
     public void removeItem(String id) {
@@ -52,10 +55,20 @@ public class Box {
                 String itemId = items[i].getId();
                 if (itemId.equals(id)) {
                     items[i] = null;
-                    break;
+                    return;
                 }
             }
         }
+        throw new IllegalArgumentException("Item not found in box");
+    }
+
+    public static void main(String[] args){
+        Box test = new Box("");
+        Item item = new Item("item", new String[]{"key"}, "", State.PERFECT, 10, LocalDate.of(2020,10,21));
+        System.out.println("BoxId: " + test.getBoxId());
+        test.addItem(item);
+        System.out.println("Items in box (by id search): " + test.getItemById(item.getId()).getName());
+        System.out.println("Items in box (by get)" + Arrays.toString(test.getItems()));
     }
 
 }
