@@ -1,10 +1,10 @@
 package utils;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
-
 import modules.*;
 
 public class CSVHandler {
@@ -14,26 +14,40 @@ public class CSVHandler {
     }
 
     public static void saveToCSV(Item obj, File file) {
+        if (obj == null || file == null) {
+            throw new IllegalArgumentException("Item or file cannot be null.");
+        }
+
         try {
-            if (!file.exists()) {
-                boolean wasFileCreated = file.createNewFile();
-                if (!wasFileCreated) {
-                    System.out.println("Failed to create the file at " + file.getAbsolutePath());
-                    return;
-                }
+            // Ensure the file exists
+            if (!file.exists() && !file.createNewFile()) {
+                System.err.println("Failed to create the file at " + file.getAbsolutePath());
+                return;
             }
 
-            try (FileWriter fileWriter = new FileWriter(file, true); // Set true for append mode
+            // Write data to the file
+            try (FileWriter fileWriter = new FileWriter(file, true); // Append mode
                  PrintWriter printWriter = new PrintWriter(fileWriter)) {
 
-                printWriter.println(obj.getName() + "," + obj.getId() + "," + obj.getState().getName() + ","
-                        + obj.getValue() + "," + obj.getPurchaseDate() + "," + String.join("|", obj.getKeyWord()));
+                String csvLine = formatItemAsCSV(obj);
+                printWriter.println(csvLine);
             }
 
         } catch (IOException e) {
-            System.err.println("An error occurred: ");
+            System.err.println("An error occurred while saving to CSV: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private static String formatItemAsCSV(Item obj) {
+        String keywords = String.join("|", obj.getKeyWord());
+        return String.format("%s,%s,%s,%.2f,%s,%s",
+                obj.getName(),
+                obj.getId(),
+                obj.getState().getName(),
+                obj.getValue(),
+                obj.getPurchaseDate(),
+                keywords);
     }
 
     // Main test function
@@ -46,5 +60,7 @@ public class CSVHandler {
 
         // Call the saveToCSV method
         saveToCSV(testItem, testFile);
+
+        System.out.println("Data saved to " + testFile.getAbsolutePath());
     }
 }

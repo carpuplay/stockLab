@@ -3,6 +3,8 @@ package modules;
 import utils.ArrayManager;
 import utils.IdManager;
 
+import java.time.LocalDate;
+
 public class Rack {
 
     public String rackId;
@@ -53,7 +55,7 @@ public class Rack {
         for (int i = 0; i < MAX_BOXES; i++) {
             if (boxes[i] != null) {
                 Item item = boxes[i].getItemById(id);
-                if (item.getId().equals(id)) {
+                if (item != null) {
                     return items[i];
                 }
             }
@@ -92,20 +94,48 @@ public class Rack {
         throw new IllegalArgumentException("Rack is full");
     }
 
+    public int emptySlots() {
+        int count = 0;
+        for (Item item : items) {
+            if (item == null) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     public static void main(String[] args) {
-        Rack test = new Rack("");
-        Item item = new Item("test", new String[]{"test"}, "",State.PERFECT, 0, null);
-        Item item2 = new Item("test2", new String[]{"test2"}, "", State.PERFECT, 0, null);
-        Item item3 = new Item("test3", new String[]{"test3"}, "",State.PERFECT, 0, null);
-        System.out.println("Rack ID: " + test.getRackId());
-        test.addItem(item);
-        test.addItem(item2);
-        test.addItem(item3);
 
-        System.out.println("Item ID (by id search): " + test.getItemById(item.getId()).getId());
-        test.removeItemFromRack(item2);
-        System.out.println("Item ID (by id search): " + test.getItemById(item2.getId()).getId());
+        Rack rack = new Rack("rackTest");
+        Box box1 = new Box("");
 
+        Item item1 = new Item("Item1", new String[]{"key1"}, "", State.PERFECT, 10, LocalDate.now());
+        Item item2 = new Item("Item2", new String[]{"key2"}, "", State.DAMAGED, 15, LocalDate.now());
+        Item item3 = new Item("Item3", new String[]{"key3"}, "", State.PERFECT, 20, LocalDate.now());
+
+        rack.addItem(item1);
+        rack.addItem(item2);
+        rack.addItem(item3);
+        Item[] items = rack.getItems();
+
+        // Verif elmt rack
+        System.out.println("Items in Rack:");
+        for (Item item : items) {
+            if (item != null) {
+                System.out.println("- " + item.getName() + " | ID: " + item.getId());
+            }
+        }
+
+        System.out.println("Empty slots in rack: " + rack.emptySlots());
+
+        rack.addBox(box1);
+
+        System.out.println("Boxes in Rack:" );
+        for (Box box : rack.getBoxes()) {
+            if (box != null) {
+                System.out.println("- " + box.getBoxId());
+            }
+        }
 
     }
 }

@@ -65,10 +65,15 @@ public class Box {
     public static void main(String[] args){
         Box test = new Box("");
         Item item = new Item("item", new String[]{"key"}, "", State.PERFECT, 10, LocalDate.of(2020,10,21));
+
+
         System.out.println("BoxId: " + test.getBoxId());
         test.addItem(item);
         System.out.println("Items in box (by id search): " + test.getItemById(item.getId()).getName());
         System.out.println("Items in box (by get)" + Arrays.toString(test.getItems()));
+
+
+
     }
 
 }

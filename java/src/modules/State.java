@@ -2,7 +2,7 @@ package modules;
 
 public enum State {
     PERFECT("Parfait","Objet en bonne état voir neuf."),
-    FAULTY("Défectueux", "Objet abimé, (ex: rayure)."),
+    DAMAGED("Défectueux", "Objet abimé, (ex: rayure)."),
     BROKEN("Cassé", "Objet qui ne fonctionne plus."),
     UNKNOWN("Inconnu", "Objet non décrit."),
     THROWN("Jeté", "L'objet à été jetté"),
@@ -32,7 +32,7 @@ public enum State {
     }
 
     public boolean isAvailable() {
-        return this == PERFECT || this == FAULTY || this == UNKNOWN;
+        return this == PERFECT || this == DAMAGED || this == UNKNOWN;
     }
 
 }

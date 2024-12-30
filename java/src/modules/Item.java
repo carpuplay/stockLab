@@ -126,7 +126,7 @@ public class Item {
         System.out.println("Object State: " + obj.getState().getName());
         System.out.println("Object Value: " + obj.getValue());
         System.out.println("Object Purchase Date: " + obj.getPurchaseDate());
-        obj.setState(State.FAULTY);
+        obj.setState(State.DAMAGED);
         System.out.println("Object State after change: " + obj.getState().getName());
         obj.addKeyword("newKeyword");
         obj.removeKeywordByName("key1");
