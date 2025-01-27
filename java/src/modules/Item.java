@@ -16,7 +16,7 @@ public class Item {
 
     public LocalDate purchaseDate;
 
-    private static final int MAX_KEYWORD = 10;
+    private static final int MAX_KEYWORD = 10; //Attention to csv hard coded kewords param
     private static final int TYPE = 2;
     private static final IdManager idManager = new IdManager();
     private static final ArrayManager arrayManager = new ArrayManager();
@@ -118,6 +118,12 @@ public class Item {
         return arrayManager.isStringInArray(this.keyWords, keyWord);
     }
 
+    public String toCSV() {
+        String keyWordsCSV = String.join(",", keyWords);
+
+        return id + "," + name + "," + keyWordsCSV + "," + state + "," + value + "," + purchaseDate;
+    }
+
     public static void main(String[] args){
         Item obj = new Item("Sample Object", new String[]{"key1", "key2"}, "", State.PERFECT, 100, LocalDate.now());
         System.out.println("Object Name: " + obj.getName());
@@ -133,7 +139,9 @@ public class Item {
         System.out.println("Object keys:" + Arrays.toString(obj.getKeyWord()));
 
         String userHomeDir = System.getProperty("user.home");
-        File file = new File("/Users/acarp/gitWorkspace/stockLab/myfile.csv");
-        CSVHandler.saveToCSV(obj, file);
+
+        CSVHandler.saveItemsToCSV();
     }
+
+
 }

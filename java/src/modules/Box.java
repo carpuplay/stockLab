@@ -62,6 +62,10 @@ public class Box {
         throw new IllegalArgumentException("Item not found in box");
     }
 
+    public String toCSV() {
+        return boxId ;
+    }
+
     public static void main(String[] args){
         Box test = new Box("");
         Item item = new Item("item", new String[]{"key"}, "", State.PERFECT, 10, LocalDate.of(2020,10,21));
@@ -75,5 +79,6 @@ public class Box {
 
 
     }
+
 
 }

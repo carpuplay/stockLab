@@ -104,6 +104,10 @@ public class Rack {
         return count;
     }
 
+    public String toCSV() {
+        return rackId + "," + rackId;
+    }
+
     public static void main(String[] args) {
 
         Rack rack = new Rack("rackTest");
