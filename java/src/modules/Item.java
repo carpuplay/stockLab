@@ -3,6 +3,7 @@ package modules;
 import utils.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -124,7 +125,7 @@ public class Item {
         return id + "," + name + "," + keyWordsCSV + "," + state + "," + value + "," + purchaseDate;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
         Item obj = new Item("Sample Object", new String[]{"key1", "key2"}, "", State.PERFECT, 100, LocalDate.now());
         System.out.println("Object Name: " + obj.getName());
         System.out.println("Object Id: " + obj.getId());
@@ -139,8 +140,9 @@ public class Item {
         System.out.println("Object keys:" + Arrays.toString(obj.getKeyWord()));
 
         String userHomeDir = System.getProperty("user.home");
+        Item[] items = {obj};
 
-        CSVHandler.saveItemsToCSV();
+        CSVHandler.saveItemsToCSV(items,"", "", "" );
     }
 
 

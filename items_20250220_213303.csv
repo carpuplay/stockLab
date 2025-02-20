@@ -1,0 +1,4 @@
+ID,Name,KeyWord0,KeyWord1,KeyWord2,KeyWord3,KeyWord4,KeyWord5,KeyWord6,KeyWord7,KeyWord8,KeyWord9,State,Value,PurchaseDate,BoxID,RackID
+CACBE,Item1,key1,null,null,null,null,null,null,null,null,null,PERFECT,10.0,2025-02-20,NULL,DAA
+A4DEB,Item2,key2,null,null,null,null,null,null,null,null,null,DAMAGED,15.0,2025-02-20,NULL,DAA
+CA2B1,Item3,key3,null,null,null,null,null,null,null,null,null,PERFECT,20.0,2025-02-20,NULL,DAA

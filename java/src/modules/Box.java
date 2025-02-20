@@ -1,8 +1,10 @@
 package modules;
 
 import utils.ArrayManager;
+import utils.CSVHandler;
 import utils.IdManager;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -66,7 +68,7 @@ public class Box {
         return boxId ;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
         Box test = new Box("");
         Item item = new Item("item", new String[]{"key"}, "", State.PERFECT, 10, LocalDate.of(2020,10,21));
 
@@ -76,6 +78,12 @@ public class Box {
         System.out.println("Items in box (by id search): " + test.getItemById(item.getId()).getName());
         System.out.println("Items in box (by get)" + Arrays.toString(test.getItems()));
 
+        test.removeItem(item.getId());
+        System.out.println("Items in box after remove: " + Arrays.toString(test.getItems()));
+
+        Box[] boxes = {test};
+
+        CSVHandler.saveBoxesToCSV(boxes, "", "");
 
 
     }

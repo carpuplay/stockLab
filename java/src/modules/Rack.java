@@ -1,8 +1,10 @@
 package modules;
 
 import utils.ArrayManager;
+import utils.CSVHandler;
 import utils.IdManager;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class Rack {
@@ -108,19 +110,19 @@ public class Rack {
         return rackId + "," + rackId;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        Rack rack = new Rack("rackTest");
+        Rack test = new Rack("");
         Box box1 = new Box("");
 
         Item item1 = new Item("Item1", new String[]{"key1"}, "", State.PERFECT, 10, LocalDate.now());
         Item item2 = new Item("Item2", new String[]{"key2"}, "", State.DAMAGED, 15, LocalDate.now());
         Item item3 = new Item("Item3", new String[]{"key3"}, "", State.PERFECT, 20, LocalDate.now());
 
-        rack.addItem(item1);
-        rack.addItem(item2);
-        rack.addItem(item3);
-        Item[] items = rack.getItems();
+        test.addItem(item1);
+        test.addItem(item2);
+        test.addItem(item3);
+        Item[] items = test.getItems();
 
         // Verif elmt rack
         System.out.println("Items in Rack:");
@@ -130,16 +132,20 @@ public class Rack {
             }
         }
 
-        System.out.println("Empty slots in rack: " + rack.emptySlots());
+        System.out.println("Empty slots in rack: " + test.emptySlots());
 
-        rack.addBox(box1);
+        test.addBox(box1);
 
         System.out.println("Boxes in Rack:" );
-        for (Box box : rack.getBoxes()) {
+        for (Box box : test.getBoxes()) {
             if (box != null) {
                 System.out.println("- " + box.getBoxId());
             }
         }
+
+        Rack[] rack = {test};
+
+        CSVHandler.saveRacksToCSV(rack, "");
 
     }
 }
